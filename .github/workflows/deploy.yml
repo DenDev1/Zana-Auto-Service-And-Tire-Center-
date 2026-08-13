@@ -1,0 +1,46 @@
+name: Staging & Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "staging" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-${{ github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Repository Files
+        run: |
+          echo "Validating project assets..."
+          test -f index.html || (echo "Error: index.html missing!" && exit 1)
+          test -d style || (echo "Error: style directory missing!" && exit 1)
+          echo "Validation successful."
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  deploy-production:
+    needs: validate-and-build
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Production
+        id: deployment
+        uses: actions/deploy-pages@v4

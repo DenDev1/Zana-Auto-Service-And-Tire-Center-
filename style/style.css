@@ -1,0 +1,140 @@
+/* ----------------------------------------------------------------
+   Zana Auto Service - Aesthetic Custom Styles
+   ---------------------------------------------------------------- */
+
+/* 1. Custom Fonts and Base Styling */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+html {
+    scroll-behavior: smooth !important;
+    scroll-padding-top: 5.5rem;
+}
+
+body {
+    scroll-behavior: smooth !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+section {
+    transition: all 0.5s ease-in-out;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 2. Hero Section Background */
+.hero {
+    background-image: url('/images/hero-bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    /* Apply a slight movement to the background image for a subtle live feel */
+    background-attachment: fixed; 
+}
+
+.hero-container {
+    position: relative;
+    z-index: 10; 
+}
+
+/* 3. Interactive Keyframes & Custom Utilities */
+
+/* Pulse animation for the primary CTA button */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); } /* zana-red */
+    70% { transform: scale(1.03); box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+.cta-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Pulse animation for the Floating Action Buttons (FABs) */
+@keyframes fabPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.fab-pulse {
+    animation: fabPulse 2s infinite ease-in-out;
+}
+
+/* Custom 3D Tilt Effect for Service Cards on Hover */
+.service-card:hover {
+    /* Subtle 3D rotation on hover for interactive depth */
+    transform: perspective(1000px) rotateX(1deg) rotateY(1deg) scale(1.05) !important;
+}
+
+/* Fallback for general cleanup */
+* {
+    box-sizing: border-box; 
+}
+
+/* 4. Mobile Responsive AI Chatbot & Safe Area Utilities */
+:root {
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+}
+
+/* Custom scrollbar for chatbot message container */
+.chat-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+.chat-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.chat-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Hide scrollbar for horizontal quick chips */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Mobile full viewport & responsive adjustments */
+@media (max-width: 639px) {
+    #ai-chat-box {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        top: 0 !important;
+        border-radius: 0 !important;
+        border: none !important;
+    }
+}
+
+/* Landscape mobile viewports (e.g. phones rotated horizontally) */
+@media (max-height: 520px) {
+    #ai-chat-box {
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        bottom: 0 !important;
+        top: 0 !important;
+        border-radius: 0 !important;
+    }
+    #ai-chat-messages {
+        padding: 0.5rem !important;
+    }
+}
